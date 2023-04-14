@@ -1,3 +1,41 @@
+import sqlite3
+conn=sqlite3.connect("pets")
 
-if __name__ == "__main__":
-    pass
+conn.execute('''CREATE TABLE person(
+id INT PRIMARY KEY NOT NULL,
+first_name TEXT NOT NULL,
+last_name TEXT NOT NULL,
+age INT NOT NULL);''')
+
+conn.execute('''CREATE TABLE pet(
+id INT PRIMARY KEY,
+name TEXT,
+breed TEXT,
+age INT,
+dead INT);''')
+
+conn.execute('''CREATE TABLE person_pet(
+person_id INT,
+pet_id INT);''')
+
+cur=conn.cursor()
+cur.execute("INSERT INTO person (id,first_name,last_name,age) VALUES (1,'James','Smith',41);")
+cur.execute("INSERT INTO person (id,first_name,last_name,age) VALUES (2,'Diana','Greene',23);")
+cur.execute("INSERT INTO person (id,first_name,last_name,age) VALUES (3,'Sara','White',27);")
+cur.execute("INSERT INTO person (id,first_name,last_name,age) VALUES (4,'William','Gibson',23);")
+
+cur.execute("INSERT INTO pet (id,name,breed,age,dead) VALUES (1,'Rusty','Dalmation',4,1);")
+cur.execute("INSERT INTO pet (id,name,breed,age,dead) VALUES (2,'Bella','AlaskanMalamute',3,0);")
+cur.execute("INSERT INTO pet (id,name,breed,age,dead) VALUES (3,'Max','CockerSpaniel',1,0);")
+cur.execute("INSERT INTO pet (id,name,breed,age,dead) VALUES (4,'Rocky','Beagle',7,0);")
+cur.execute("INSERT INTO pet (id,name,breed,age,dead) VALUES (5,'Rufus','CockerSpaniel',1,0);")
+cur.execute("INSERT INTO pet (id,name,breed,age,dead) VALUES (6,'Spot','Bloodhound',2,1);")
+
+cur.execute("INSERT INTO person_pet (person_id,pet_id) VALUES (1,1);")
+cur.execute("INSERT INTO person_pet (person_id,pet_id) VALUES (1,2);")
+cur.execute("INSERT INTO person_pet (person_id,pet_id) VALUES (2,3);")
+cur.execute("INSERT INTO person_pet (person_id,pet_id) VALUES (2,4);")
+cur.execute("INSERT INTO person_pet (person_id,pet_id) VALUES (3,5);")
+cur.execute("INSERT INTO person_pet (person_id,pet_id) VALUES (4,6);")
+conn.commit()
+conn.close()
